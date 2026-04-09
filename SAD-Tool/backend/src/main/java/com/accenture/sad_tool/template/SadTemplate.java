@@ -8,7 +8,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sad_templates")
+@Table(name = "sad_templates", indexes = {
+    @Index(name = "sad_templates_created_by", columnList = "created_by"),
+    @Index(name = "sad_templates_deleted_at", columnList = "deleted_at")
+})
 public class SadTemplate {
 
     @Id

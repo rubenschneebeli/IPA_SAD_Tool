@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sad_documents")
+@Table(name = "sad_documents", indexes = {
+    @Index(name = "sad_documents_created_by", columnList = "created_by"),
+    @Index(name = "sad_documents_template_id", columnList = "template_id")
+})
 public class SadDocument {
 
     @Id
