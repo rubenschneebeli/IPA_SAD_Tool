@@ -1,7 +1,7 @@
 package com.accenture.sad_tool.document;
 
 import com.accenture.sad_tool.template.SadTemplate;
-import com.accenture.sad_tool.user.User;
+import com.accenture.sad_tool.user.AppUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -32,7 +32,7 @@ public class SadDocument {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
-    private User createdBy;
+    private AppUser createdBy;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -62,8 +62,8 @@ public class SadDocument {
     public SadTemplate getTemplate() { return template; }
     public void setTemplate(SadTemplate template) { this.template = template; }
 
-    public User getCreatedBy() { return createdBy; }
-    public void setCreatedBy(User createdBy) { this.createdBy = createdBy; }
+    public AppUser getCreatedBy() { return createdBy; }
+    public void setCreatedBy(AppUser createdBy) { this.createdBy = createdBy; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
