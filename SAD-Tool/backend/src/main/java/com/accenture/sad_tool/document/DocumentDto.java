@@ -12,7 +12,7 @@ public class DocumentDto {
         @NotBlank(message = "Title cannot be empty")
         private String title;
 
-        @NotNull(message = "Tempalte ID cannot be empty")
+        @NotNull(message = "Template ID cannot be empty")
         private UUID templateId;
 
         public String getTitle() { return title; }

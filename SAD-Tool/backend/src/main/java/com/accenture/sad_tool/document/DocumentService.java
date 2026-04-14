@@ -41,7 +41,7 @@ public class DocumentService {
     public DocumentDto.Response create(DocumentDto.CreateRequest request, String username) {
         SadTemplate template = templateRepository.findByIdAndDeletedAtIsNull(request.getTemplateId())
             .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Teplate not found: " + request.getTemplateId()
+                HttpStatus.NOT_FOUND, "template not found: " + request.getTemplateId()
             ));
 
         AppUser user = userRepository.findByUsername(username)
