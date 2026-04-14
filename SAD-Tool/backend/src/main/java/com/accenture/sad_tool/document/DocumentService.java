@@ -59,7 +59,6 @@ public class DocumentService {
     public DocumentDto.Response update(UUID id, DocumentDto.UpdateRequest request) {
         SadDocument document = findOrError(id);
         document.setTitle(request.getTitle());
-        //HTML sanitizen für xss schutz
         document.setHtmlContent(sanitize(request.getHtmlContent()));
         return DocumentDto.Response.from(documentRepository.save(document));
     }
