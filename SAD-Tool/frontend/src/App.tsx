@@ -1,7 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import LoginPage from "./pages/LoginPage"
-import { AuthProvider } from "./AuthContext"
+import { AuthProvider, useAuth } from "./AuthContext"
+import TemplatesPage from "./pages/TemplateOverviewPage"
 
+function PrivateRoute({ children }: { children: React.ReactNode }) {
+  const { isLoggedIn } = useAuth()
+  return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />
+}
 
 function App() {
   return (
@@ -10,7 +15,7 @@ function App() {
        <Routes>
        <Route path="/" element={<Navigate to="/login" replace />} />
        <Route path="/login" element={<LoginPage />} />
-
+       <Route path="/templates" element={<PrivateRoute><TemplatesPage /></PrivateRoute>} />
        </Routes>
      </AuthProvider>
    </BrowserRouter>
