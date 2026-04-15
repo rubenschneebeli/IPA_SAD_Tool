@@ -19,7 +19,7 @@ export default function Nav() {
   return (
     <nav className="navBar">
       <button className="navBarLogo" onClick={() => navigate('/templates')}>
-        <div className="navBarIcon-">
+        <div className="navBarIcon">
         <img src={documentIcon} width={30} height={30} />
         </div>
         <span className="navBartitle">SAD Tool</span>
