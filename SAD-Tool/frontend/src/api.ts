@@ -53,3 +53,37 @@
   update: (id: string, data: { title: string; htmlContent: string }) => request<TemplateDto>(`/templates/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   delete: (id: string) => request<void>(`/templates/${id}`, { method: 'DELETE' }),
 }
+
+export interface DocumentDto {
+    id: string
+    title: string
+    htmlContent: string
+    templateId: string
+    templateTitle: string
+    createdByUsername: string | null
+    createdAt: string
+    updatedAt: string
+  }
+  
+  export const documents = {
+    getAll: () => request<DocumentDto[]>('/documents'),
+    getById: (id: string) => request<DocumentDto>(`/documents/${id}`),
+    create: (data: { title: string; templateId: string }) => request<DocumentDto>('/documents', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: { title: string; htmlContent: string }) => request<DocumentDto>(`/documents/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    delete: (id: string) => request<void>(`/documents/${id}`, { method: 'DELETE' }),
+
+    downloadPdf: async (id: string, filename: string): Promise<void> => {
+      const response = await fetch(`${BASE}/documents/${id}/pdf`, {
+        headers: { Authorization: getAuthHeader() },
+      })
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${filename}.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    },
+  }
