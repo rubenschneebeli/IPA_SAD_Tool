@@ -75,3 +75,13 @@ input, button {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.secondaryButton {
+  background: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #f4f4f4;
+}
