@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { templates, type TemplateDto } from '../api'
 import NavBar from '../components/NavBar'
 import './TemplateOverview.css'
+import trashIcon from '../assets/trashIcon.svg'
 
 export default function TemplatesPage() {
   const [list, setList] = useState<TemplateDto[]>([])
@@ -23,7 +24,6 @@ export default function TemplatesPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this template?')) return
     try {
       await templates.delete(id)
       setList(prev => prev.filter(t => t.id !== id))
@@ -56,15 +56,15 @@ export default function TemplatesPage() {
         {loading ? (
           <div className="loader"><div className="spinner" />Loading...</div>
         ) : list.length === 0 ? (
-          <p className="empty">No templates yet. Create your first template!</p>
+          <p className="empty">There are no Templates yet, you can be the first to create a template</p>
         ) : (
           <div className="grid">
             {list.map(t => (
               <div key={t.id} className="card">
                 <div className="card-head">
                   <div className="label">Template</div>
-                  <button className="delete-btn" onClick={() => handleDelete(t.id)} title="Delete">
-
+                  <button className="deleteButton" onClick={() => handleDelete(t.id)} title="Delete">
+                    <img src={trashIcon} width={14} height={14} />
                   </button>
                 </div>
                 <h3>{t.title}</h3>

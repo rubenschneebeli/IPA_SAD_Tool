@@ -69,7 +69,7 @@
     color: var(--color-primary);
   }
   
-  .delete-btn {
+  .deleteButton {
     background: none;
     border: none;
     cursor: pointer;
@@ -79,8 +79,11 @@
     align-items: center;
   }
   
-  .delete-btn:hover {
+  .deleteButton:hover {
     color: var(--color-primary);
+    background-color: #dddddd;
+    border-radius: 5px;
+
   }
   
   .meta {
