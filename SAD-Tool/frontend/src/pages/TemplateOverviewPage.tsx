@@ -5,11 +5,24 @@ import NavBar from '../components/NavBar'
 import './OverviewPages.css'
 import trashIcon from '../assets/trashIcon.svg'
 
+const PAGE_SIZES = [6, 12, Infinity]
+
 export default function TemplatesPage() {
   const [list, setList] = useState<TemplateDto[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const [page, setPage] = useState(0)
+  const [pageSize, setPageSize] = useState(6)
+
+  const totalPages = pageSize === Infinity ? 1 : Math.ceil(list.length / pageSize)
+  const paged = pageSize === Infinity ? list : list.slice(page * pageSize, (page + 1) * pageSize)
+
+  function handlePageSizeChange(size: number) {
+    setPageSize(size)
+    setPage(0)
+  }
+
 
   useEffect(() => { load() }, [])
 
@@ -59,7 +72,7 @@ export default function TemplatesPage() {
           <p className="empty">There are no Templates yet, create a new Template</p>
         ) : (
           <div className="grid">
-            {list.map(t => (
+            {paged.map(t => (
               <div key={t.id} className="card">
                 <div className="card-head">
                   <div className="label">Template</div>
@@ -80,9 +93,36 @@ export default function TemplatesPage() {
                 </div>
               </div>
             ))}
+            
           </div>
+          
         )}
+        <div className="pagination">
+          <div className="paginationButtons">
+            {PAGE_SIZES.map(s => (
+              <button
+                key={s}
+                className={`pageSizeButton ${pageSize === s ? 'active' : ''}`}
+                onClick={() => handlePageSizeChange(s)}
+              >
+                {s === Infinity ? 'All' : s}
+              </button>
+            ))}
+          </div>
+          {totalPages > 1 && (
+            <div className="paginationNavigation">
+              <button className="pageNavButton" disabled={page === 0} onClick={() => setPage(p => p - 1)}>
+                ‹
+              </button>
+              <span className="pageInfo">{page + 1} / {totalPages}</span>
+              <button className="pageNavButton" disabled={page === totalPages - 1} onClick={() => setPage(p => p + 1)}>
+                ›
+              </button>
+            </div>
+          )}
+        </div>
       </div>
+
     </>
   )
 }
