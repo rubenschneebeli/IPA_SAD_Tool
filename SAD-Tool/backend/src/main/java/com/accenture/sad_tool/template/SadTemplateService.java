@@ -68,7 +68,7 @@ public class SadTemplateService {
     private SadTemplate findActiveOrThrow(UUID id) {
         return repository.findByIdAndDeletedAtIsNull(id)
             .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Template nicht gefunden: " + id
+                HttpStatus.NOT_FOUND, "Template not found: " + id
             ));
     }
 }

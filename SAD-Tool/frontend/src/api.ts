@@ -5,7 +5,7 @@
     const res = await fetch(`${BASE}/auth/login`, {
       headers: { Authorization: `Basic ${credentials}` },
     })
-    if (!res.ok) throw new Error('Ungültige Anmeldedaten')
+    if (!res.ok) throw new Error('Invalid credentials')
     sessionStorage.setItem('credentials', credentials)
     return res.json()
   }
