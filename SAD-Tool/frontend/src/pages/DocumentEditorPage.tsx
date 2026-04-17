@@ -5,6 +5,7 @@ import RichTextEditor from '../components/RichTextEditor'
 import ExpandableChapters from '../components/ExpandableChapters'
 import { parseChapters, mergeChapters, type Chapter } from '../components/ChapterParser'
 import NavBar from '../components/NavBar'
+import './DocumentEditorPage.css'
 
 type ViewMode = 'full' | 'chapters'
 
@@ -106,12 +107,12 @@ export default function DocumentEditorPage() {
     <>
       <NavBar   />
       <div className="container">
-        <header className="page-header">
+        <header className="pageheader">
           <div>
             <h1>{title || 'New Document'}</h1>
             {doc && <p className="subtitle">Template: {doc.templateTitle}</p>}
           </div>
-          <div className="page-actions">
+          <div className="pageActions">
             <button className="btn secondaryButton" onClick={() => navigate('/documents')}>
               ← Back
             </button>
@@ -136,10 +137,10 @@ export default function DocumentEditorPage() {
           </div>
 
           <div className="toggle">
-            <button type="button" className={`toggle-btn ${view === 'full' ? 'active' : ''}`} onClick={() => switchView('full')}>
+            <button type="button" className={`toggleButton ${view === 'full' ? 'active' : ''}`} onClick={() => switchView('full')}>
               Full View
             </button>
-            <button type="button" className={`toggle-btn ${view === 'chapters' ? 'active' : ''}`} onClick={() => switchView('chapters')}>
+            <button type="button" className={`toggleButton ${view === 'chapters' ? 'active' : ''}`} onClick={() => switchView('chapters')}>
               Chapters
             </button>
           </div>
@@ -154,7 +155,7 @@ export default function DocumentEditorPage() {
 
           {error && <p className="error">{error}</p>}
 
-          <div className="form-actions">
+          <div className="formActions">
             <button type="submit" className="btn primaryButton" disabled={saving}>
               {saving ? 'Saving...' : 'Save'}
             </button>

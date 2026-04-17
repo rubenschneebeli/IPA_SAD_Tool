@@ -14,6 +14,7 @@ export default function TemplatesPage() {
   const navigate = useNavigate()
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(6)
+  const [confirmId, setConfirmId] = useState<string | null>(null)
 
   const totalPages = pageSize === Infinity ? 1 : Math.ceil(list.length / pageSize)
   const paged = pageSize === Infinity ? list : list.slice(page * pageSize, (page + 1) * pageSize)
@@ -40,6 +41,7 @@ export default function TemplatesPage() {
     try {
       await templates.delete(id)
       setList(prev => prev.filter(t => t.id !== id))
+      setConfirmId(null)
     } catch {
       setError('Delete failed.')
     }
@@ -74,16 +76,23 @@ export default function TemplatesPage() {
           <div className="grid">
             {paged.map(t => (
               <div key={t.id} className="card">
-                <div className="card-head">
+                <div className="cardHead">
                   <div className="label">Template</div>
-                  <button className="deleteButton" onClick={() => handleDelete(t.id)} title="Delete">
-                    <img src={trashIcon} width={14} height={14} />
-                  </button>
+                  {confirmId === t.id ? (
+                    <div className="inlineConfirm">
+                      <button className="confirmYes" onClick={() => handleDelete(t.id)}>✓</button>
+                      <button className="confirmNo" onClick={() => setConfirmId(null)}>✗</button>
+                    </div>
+                  ) : (
+                    <button className="deleteButton" onClick={() => setConfirmId(t.id)} title="Delete">
+                      <img src={trashIcon} width={14} height={14} />
+                    </button>
+                  )}
                 </div>
                 <h3>{t.title}</h3>
                 <p className="meta">Created by: {t.createdByUsername ?? '—'}</p>
                 <p className="meta">Created: {new Date(t.createdAt).toLocaleDateString('en-GB')}</p>
-                <div className="card-btns">
+                <div className="cardButtons">
                   <button className="btn primaryButton" onClick={() => navigate(`/documents/new?templateId=${t.id}`)}>
                     Create Document
                   </button>
