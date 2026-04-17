@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import documentIcon from '../assets/documentIcon.svg'
-import './Navbar.css'
+import './NavBar.css'
 
 export default function Nav() {
   const { username, logout } = useAuth()
