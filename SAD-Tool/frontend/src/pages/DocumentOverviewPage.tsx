@@ -14,6 +14,7 @@ export default function DocumentOverview() {
   const navigate = useNavigate()
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(6)
+  const [confirmId, setConfirmId] = useState<string | null>(null)
 
   const totalPages = pageSize === Infinity ? 1 : Math.ceil(list.length / pageSize)
   const paged = pageSize === Infinity ? list : list.slice(page * pageSize, (page + 1) * pageSize)
@@ -38,7 +39,8 @@ export default function DocumentOverview() {
   async function handleDelete(id: string) {
     try {
       await documents.delete(id)
-      setList(prev => prev.filter(t => t.id !== id))
+      setList(prev => prev.filter(d => d.id !== id))
+      setConfirmId(null)
     } catch {
       setError('Delete failed.')
     }
@@ -52,10 +54,9 @@ export default function DocumentOverview() {
           <div>
             <h1>Documents</h1>
           </div>
-    
         </header>
 
-          <div className="toolbar">
+        <div className="toolbar">
           <button className="btn secondaryButton" onClick={() => navigate('/templates/')}>
             Back to Templates
           </button>
@@ -70,21 +71,28 @@ export default function DocumentOverview() {
           <div className="grid">
             {paged.map(t => (
               <div key={t.id} className="card">
-                <div className="card-head">
+                <div className="cardHead">
                   <div className="label">Document</div>
-                  <button className="deleteButton" onClick={() => handleDelete(t.id)} title="Delete">
-                    <img src={trashIcon} width={14} height={14} />
-                  </button>
+                  {confirmId === t.id ? (
+                    <div className="inlineConfirm">
+                      <button className="confirmYes" onClick={() => handleDelete(t.id)}>✓</button>
+                      <button className="confirmNo" onClick={() => setConfirmId(null)}>✗</button>
+                    </div>
+                  ) : (
+                    <button className="deleteButton" onClick={() => setConfirmId(t.id)} title="Delete">
+                      <img src={trashIcon} width={14} height={14} />
+                    </button>
+                  )}
                 </div>
                 <h3>{t.title}</h3>
                 <p className="meta">Template: {t.templateTitle ?? '—'}</p>
                 <p className="meta">Created by: {t.createdByUsername ?? '—'}</p>
                 <p className="meta">Created: {new Date(t.createdAt).toLocaleDateString('en-GB')}</p>
-                <div className="card-btns">
+                <div className="cardButtons">
                   <button className="btn primaryButton" onClick={() => navigate(`/documents/${t.id}/edit`)}>
                     Edit
                   </button>
-                  <button className="btn secondaryButton" /*onClick={() => PDF export*/>
+                  <button className="btn secondaryButton" onClick={() => documents.downloadPdf(t.id, t.title)}>
                     Export as PDF
                   </button>
                 </div>
@@ -92,6 +100,7 @@ export default function DocumentOverview() {
             ))}
           </div>
         )}
+
         <div className="pagination">
           <div className="paginationButtons">
             {PAGE_SIZES.map(s => (

@@ -1,0 +1,100 @@
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .chapter {
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    transition: border-color 0.15s;
+  }
+  
+  .chapter--open {
+    border-color: #EC0000;
+  }
+  
+  .chapter-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background: #f5f5f5;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: background 0.1s;
+  }
+  
+  .chapter-head:hover {
+    background: #fff0f0;
+  }
+  
+  .chapter--open .chapter-head {
+    background: #fff5f5;
+    border-bottom: 1px solid #f0c0c0;
+  }
+  
+  .chapter-head:focus-visible {
+    outline: 2px solid rgba(236, 0, 0, 0.4);
+    outline-offset: -2px;
+  }
+  
+  .ch-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #EC0000;
+    background: #fff0f0;
+    border: 1px solid #f0c0c0;
+    flex-shrink: 0;
+  }
+  
+  .chapter--open .ch-num {
+    background: #EC0000;
+    border-color: #EC0000;
+    color: #fff;
+  }
+  
+  .ch-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .ch-icon {
+    font-size: 10px;
+    color: #999;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  
+  .chapter--open .ch-icon {
+    color: #EC0000;
+  }
+  
+  .ch-body {
+    border-top: 1px solid #f0c0c0;
+  }
+  
+  .ch-body .editor {
+    border: none;
+    border-radius: 0;
+  }
+  
+  .ch-body .editor:focus-within {
+    outline: none;
+    border: none;
+  }
+  
